@@ -69,39 +69,44 @@ export default function ApiForm() {
     const filteredResponse = renderFilteredResponse();
 
     return (
-        <div className="max-w-xl mx-auto p-6 bg-gray-100 dark:bg-gray-900 rounded-md shadow-lg transition-all duration-500">
-            <h1 className="text-2xl font-bold mb-4 text-gray-900 dark:text-gray-100">BFHL Challenge</h1>
-            <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="max-w-3xl mx-auto bg-white p-8 rounded-md shadow-lg border border-gray-200">
+            <h1 className="text-3xl font-bold text-gray-900 mb-6 text-center">BFHL Form</h1>
+            
+            {/* Row Layout for Form Input and Submit Button */}
+            <div className="grid grid-cols-2 gap-6 mb-6">
                 {/* JSON Input */}
-                <div>
-                    <label className="block text-lg font-semibold text-gray-700 dark:text-gray-300 mb-2">API Input</label>
+                <div className="col-span-2">
+                    <label className="block text-lg font-medium text-gray-700 mb-2">Input</label>
                     <textarea
                         value={jsonInput}
                         onChange={(e) => setJsonInput(e.target.value)}
                         rows={4}
-                        className="mt-1 block w-full border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800 text-gray-800 dark:text-gray-200 rounded-md shadow-sm focus:border-blue-500 focus:ring-blue-500"
-                        placeholder="Input here..."
+                        className="w-full border border-gray-300 rounded-md p-2 shadow-sm focus:ring-blue-500 focus:border-blue-500"
+                        placeholder="Enter your JSON input here..."
                     />
                 </div>
-                <div>
+
+                {/* Submit Button */}
+                <div className="col-span-2 flex justify-center">
                     <button
                         type="submit"
-                        className="w-full bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 dark:bg-blue-400 dark:hover:bg-blue-500"
+                        onClick={handleSubmit}
+                        className="bg-blue-500 text-white px-6 py-2 rounded-md shadow-md hover:bg-blue-600 transition duration-300"
                     >
                         Submit
                     </button>
                 </div>
-            </form>
+            </div>
 
-            {/* Multiselect Filter - Show only after valid JSON submission */}
+            {/* Multiselect Dropdown - Show only after valid JSON submission */}
             {isSubmitted && (
-                <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700 dark:text-gray-300">Multi Filter</label>
+                <div className="mb-6">
+                    <label className="block text-sm font-medium text-gray-700 mb-2">Multi Filter</label>
                     <Select
                         isMulti
                         options={filterOptions}
                         onChange={handleFilterChange}
-                        className="mt-2"
+                        className="w-full"
                         classNamePrefix="select"
                         placeholder="Select filters"
                     />
@@ -109,13 +114,13 @@ export default function ApiForm() {
             )}
 
             {/* Error Handling */}
-            {error && <p className="text-red-600 dark:text-red-400 mt-4">{error}</p>}
+            {error && <p className="text-red-600 mt-4">{error}</p>}
 
             {/* Filtered Response */}
             {response && (
                 <div className="mt-6">
-                    <h2 className="text-lg font-semibold text-gray-700 dark:text-gray-200">Filtered Response</h2>
-                    <pre className="bg-gray-200 dark:bg-gray-800 p-4 rounded-lg text-gray-800 dark:text-gray-200">
+                    <h2 className="text-xl font-semibold text-gray-700 mb-4">Response</h2>
+                    <pre className="bg-gray-50 p-4 rounded-md border border-gray-200 text-gray-700 shadow-sm">
                         {filteredResponse && Object.keys(filteredResponse).length > 0 ? (
                             JSON.stringify(filteredResponse, null, 2)
                         ) : (
